@@ -1,10 +1,10 @@
 ```sh
-# Create an app-operator project that defines the App CR.
+# Create an hello-operator project that defines the App CR.
 $ mkdir -p $HOME/projects/example-inc/
-# Create a new app-operator project
+# Create a new hello-operator project
 $ cd $HOME/projects/example-inc/
-$ operator-sdk new app-operator --repo github.com/example-inc/app-operator
-$ cd app-operator
+$ operator-sdk new hello-operator --repo github.com/example-inc/hello-operator
+$ cd hello-operator
 
 # Add a new API for the custom resource AppService
 $ operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=AppService
@@ -12,19 +12,19 @@ $ operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=AppService
 # Add a new controller that watches for AppService
 $ operator-sdk add controller --api-version=app.example.com/v1alpha1 --kind=AppService
 
-# Build and push the app-operator image to a public registry such as quay.io
-$ operator-sdk build quay.io/<username>/app-operator
+# Build and push the hello-operator image to a public registry
+$ operator-sdk build hub.docker.com/konfortes/hello-operator
 
-# Login to public registry such as quay.io
-$ docker login quay.io
+# Login to public registry
+$ docker login
 
 # Push image
-$ docker push quay.io/<username>/app-operator
+$ docker push quay.io/<username>/hello-operator
 
 # Update the operator manifest to use the built image name (if you are performing these steps on OSX, see note below)
-$ sed -i 's|REPLACE_IMAGE|quay.io/<username>/app-operator|g' deploy/operator.yaml
+$ sed -i 's|REPLACE_IMAGE|quay.io/<username>/hello-operator|g' deploy/operator.yaml
 # On OSX use:
-$ sed -i "" 's|REPLACE_IMAGE|quay.io/<username>/app-operator|g' deploy/operator.yaml
+$ sed -i "" 's|REPLACE_IMAGE|quay.io/<username>/hello-operator|g' deploy/operator.yaml
 
 # Setup Service Account
 $ kubectl create -f deploy/service_account.yaml
@@ -33,7 +33,7 @@ $ kubectl create -f deploy/role.yaml
 $ kubectl create -f deploy/role_binding.yaml
 # Setup the CRD
 $ kubectl create -f deploy/crds/app.example.com_appservices_crd.yaml
-# Deploy the app-operator
+# Deploy the hello-operator
 $ kubectl create -f deploy/operator.yaml
 
 # Create an AppService CR
