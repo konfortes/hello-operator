@@ -18,13 +18,13 @@ $ operator-sdk build hub.docker.com/konfortes/hello-operator
 # Login to public registry
 $ docker login
 
+$ docker tag <built image id> konfortes/hello-operator:latest
 # Push image
-$ docker push quay.io/<username>/hello-operator
+$ docker push konfortes/hello-operator
 
-# Update the operator manifest to use the built image name (if you are performing these steps on OSX, see note below)
-$ sed -i 's|REPLACE_IMAGE|quay.io/<username>/hello-operator|g' deploy/operator.yaml
+# Update the operator manifest to use the built image name
 # On OSX use:
-$ sed -i "" 's|REPLACE_IMAGE|quay.io/<username>/hello-operator|g' deploy/operator.yaml
+$ sed -i "" 's|REPLACE_IMAGE|konfortes/hello-operator:latest|g' deploy/operator.yaml
 
 # Setup Service Account
 $ kubectl create -f deploy/service_account.yaml
